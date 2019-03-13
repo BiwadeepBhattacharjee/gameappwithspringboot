@@ -19,7 +19,7 @@ import javax.persistence.Id;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-            int id;
+    int id;
     String name;
     int score;
 

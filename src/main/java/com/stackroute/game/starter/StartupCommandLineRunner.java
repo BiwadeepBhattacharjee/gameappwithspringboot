@@ -20,17 +20,17 @@ public class StartupCommandLineRunner implements CommandLineRunner {
     int id;
 
 
-
     @Value("${score:default}")
     int score;
 
     @Autowired
-    public StartupCommandLineRunner(PlayerRepository playerRepository){
-        this.playerRepository=playerRepository;
+    public StartupCommandLineRunner(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
 
     }
+
     @Override
     public void run(String... args) throws Exception {
-        playerRepository.save(new Player(id,environment.getProperty("name"),score));
+        playerRepository.save(new Player(id, environment.getProperty("name"), score));
     }
 }

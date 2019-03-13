@@ -22,22 +22,21 @@ public class StartupApplicationListener implements ApplicationListener<ContextRe
     int id;
 
 
-
     @Value("${score:default}")
     int score;
 
-        private PlayerRepository playerRepository;
+    private PlayerRepository playerRepository;
 
-        @Autowired
-        public StartupApplicationListener(PlayerRepository playerRepository){
-            this.playerRepository=playerRepository;
+    @Autowired
+    public StartupApplicationListener(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
 
-        }
+    }
 
-        @Override
-        public void onApplicationEvent(ContextRefreshedEvent event) {
-            playerRepository.save(new Player(id,environment.getProperty("name"),score));
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        playerRepository.save(new Player(id, environment.getProperty("name"), score));
 
-        }
+    }
 
 }

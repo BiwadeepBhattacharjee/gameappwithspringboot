@@ -4,7 +4,6 @@ package com.stackroute.game.Controller;
 import com.stackroute.game.Service.PlayerServiceImpl;
 import com.stackroute.game.domain.Player;
 import com.stackroute.game.exceptions.PlayerAlreadyExistsException;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +24,13 @@ public class PlayerController {
     }
 
     @PostMapping("player")
-    public ResponseEntity<Player> savePlayer (@RequestBody Player player) throws PlayerAlreadyExistsException {
+    public ResponseEntity<Player> savePlayer(@RequestBody Player player) throws PlayerAlreadyExistsException {
         ResponseEntity responseEntity;
-      //  try {
-            Player savedPlayer = playerService.savePlayer(player);
 
-            return new ResponseEntity<>(savedPlayer, HttpStatus.OK);
-//        } catch (PlayerAlreadyExistsException e) {
-//            responseEntity = new ResponseEntity<String>(e.getMessage(), HttpStatus.CONFLICT);
-//            e.printStackTrace();
-//        }
-//        return responseEntity;
+        Player savedPlayer = playerService.savePlayer(player);
+
+        return new ResponseEntity<>(savedPlayer, HttpStatus.OK);
+
 
     }
 
@@ -45,9 +40,9 @@ public class PlayerController {
         return players;
     }
 
-    @GetMapping("/name")
+    @GetMapping("/players/{name}")
     public List<Player> searchByName(@PathVariable String name) {
-        List<Player> player = playerService.findByName(name);
+        List<Player> player = playerService.retrievePlayerByName(name);
 
         return player;
     }
@@ -62,6 +57,6 @@ public class PlayerController {
 
     @DeleteMapping("/player/{id}")
     public void deletePlayer(@PathVariable int id) {
-        playerService.deleteById(id);
+        playerService.deletePlayerById(id);
     }
 }
