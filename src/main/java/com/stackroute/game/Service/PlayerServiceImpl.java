@@ -3,6 +3,7 @@ package com.stackroute.game.Service;
 
 import com.stackroute.game.Repository.PlayerRepository;
 import com.stackroute.game.domain.Player;
+import com.stackroute.game.exceptions.PlayerAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,14 @@ public class PlayerServiceImpl {
     }
 
 
-    public Player savePlayer(Player player){
+    public Player savePlayer(Player player) throws PlayerAlreadyExistsException {
+        if(playerRepository.existsById(player.getId())){
+            throw new PlayerAlreadyExistsException("Player already exists");
+        }
         Player savedPlayer=playerRepository.save(player);
+//        if(savedPlayer==null){
+//            throw new PlayerAlreadyExistsException("Player already exists");
+//        }
         return savedPlayer;
     }
 
@@ -38,8 +45,13 @@ public class PlayerServiceImpl {
     }
 
 
-    public Optional<Player> findById(int id){
+    public Optional<Player> retrievePlayerById(int id){
         Optional<Player> player=playerRepository.findById(id);
+        return player;
+    }
+
+    public List<Player> findByName(String name){
+        List<Player> player=playerRepository.findByName(name);
         return player;
     }
 
